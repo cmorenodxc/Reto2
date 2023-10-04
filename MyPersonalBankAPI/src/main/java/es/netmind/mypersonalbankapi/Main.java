@@ -1,4 +1,4 @@
-package es.netmind.mypersonalbankapi;
+package main.java.es.netmind.mypersonalbankapi;
 
 import es.netmind.mypersonalbankapi.controladores.ClientesController;
 import es.netmind.mypersonalbankapi.controladores.CuentasController;
