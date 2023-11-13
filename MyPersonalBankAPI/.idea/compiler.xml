@@ -9,8 +9,5 @@
         <module name="main.java.es.netmind.mypersonalbankapi" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="es.netmind.mypersonalbankapi" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

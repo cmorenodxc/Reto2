@@ -35,6 +35,11 @@ public class ClientesInMemoryRepo implements IClientesRepo {
     }
 
     @Override
+    public Empresa insertClientesEmpresa(Empresa nuevoClienteEmpresa) throws Exception {
+        return null;
+    }
+
+    @Override
     public List<Cliente> getAll() {
         return clientes;
     }
