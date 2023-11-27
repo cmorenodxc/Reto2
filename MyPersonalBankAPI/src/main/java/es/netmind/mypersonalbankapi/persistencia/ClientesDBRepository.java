@@ -4,25 +4,34 @@ import es.netmind.mypersonalbankapi.modelos.clientes.Cliente;
 
 import es.netmind.mypersonalbankapi.modelos.clientes.Empresa;
 import es.netmind.mypersonalbankapi.properties.PropertyValues;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 public class ClientesDBRepository implements IClientesRepo{
 
-    private static String db_url = null;
+    @Value("${db_url}")
+    private String db_url1;
 
-    public ClientesDBRepository() throws Exception {
+
+ /*   public ClientesDBRepository() throws Exception {
         PropertyValues props = new PropertyValues();
         db_url = props.getPropValues().getProperty("db_url");
-    }
+    }*/
     @Override
     public Empresa insertClientesEmpresa(Empresa nuevoClienteEmpresa) throws Exception {
          String sql = "INSERT INTO cliente values (?,NULL,?,?,?,?,?,?,?,?,?)";
 
         try (
-                Connection conn = DriverManager.getConnection(db_url);
+                Connection conn = DriverManager.getConnection(db_url1);
                 PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
             stmt.setString(1, "Empresa");
@@ -60,7 +69,7 @@ public class ClientesDBRepository implements IClientesRepo{
         String sql = "SELECT * FROM cliente c WHERE c.dtype = 'Empresa'";
 
         try (
-                Connection conn = DriverManager.getConnection(db_url);
+                Connection conn = DriverManager.getConnection(db_url1);
                 PreparedStatement stmt = conn.prepareStatement(sql);
 
         ) {
