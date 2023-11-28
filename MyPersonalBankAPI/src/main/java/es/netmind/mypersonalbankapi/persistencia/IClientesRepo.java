@@ -18,5 +18,11 @@ public interface IClientesRepo {
 
     public Cliente updateClient(Cliente cliente) throws Exception;
 
+    public List<Empresa> getListaClienteEmpresa() throws Exception;
+
+    public Cliente getDetalleCliente(int idCliente) throws Exception;
+
+    public Cliente actualizarCliente(Cliente c2) throws Exception;
+
 
 }

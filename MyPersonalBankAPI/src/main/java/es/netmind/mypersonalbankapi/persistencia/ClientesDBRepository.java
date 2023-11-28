@@ -18,14 +18,10 @@ import java.util.List;
 @Getter
 public class ClientesDBRepository implements IClientesRepo{
 
-    @Value("${db_url}")
+
     private String db_url1;
 
 
- /*   public ClientesDBRepository() throws Exception {
-        PropertyValues props = new PropertyValues();
-        db_url = props.getPropValues().getProperty("db_url");
-    }*/
     @Override
     public Empresa insertClientesEmpresa(Empresa nuevoClienteEmpresa) throws Exception {
          String sql = "INSERT INTO cliente values (?,NULL,?,?,?,?,?,?,?,?,?)";
@@ -99,6 +95,91 @@ public class ClientesDBRepository implements IClientesRepo{
 
         return empresas;
     }
+
+    public Cliente getDetalleCliente(int idCliente) throws Exception {
+
+        Cliente c1 = null;
+
+        String sql = "SELECT * FROM cliente c WHERE c.id = ?";
+
+        try (
+                Connection conn = DriverManager.getConnection(db_url1);
+                PreparedStatement stmt = conn.prepareStatement(sql);
+
+        ) {
+
+            stmt.setInt(1,idCliente);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                c1 = new Cliente(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("email"),
+                        rs.getString("direccion"),
+                        rs.getDate("alta").toLocalDate(),
+                        rs.getBoolean("activo"),
+                        rs.getBoolean("moroso")) {
+                    @Override
+                    public boolean validar() throws Exception {
+                        return false;
+                    }
+                };
+
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception(e);
+        }
+
+        return c1;
+    }
+
+    public Cliente actualizarCliente(Cliente c2) throws Exception{
+        String sql = "UPDATE cliente set nombre=?, direccion=?, email=? WHERE id=?";
+        try (
+                Connection conn = DriverManager.getConnection(db_url1);
+                PreparedStatement stmt = conn.prepareStatement(sql);
+
+        ) {
+            stmt.setString(1, c2.getNombre());
+            stmt.setString(2, c2.getDireccion());
+            stmt.setString(3, c2.getEmail());
+            stmt.setInt(4, c2.getId());
+
+
+            int rows = stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception(e);
+        }
+        return c2;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public List<Cliente> getAll() {

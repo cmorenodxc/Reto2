@@ -17,6 +17,7 @@ public class Prestamo {
     private boolean moroso;
     private boolean liquidado;
 
+
     /* CONSTRUCTOR */
     public Prestamo(Integer id, LocalDate fechaConcesion, Double monto, Double saldo, Integer interes, Integer interesMora, boolean moroso, boolean liquidado, Integer anios) {
         this.id = id;
